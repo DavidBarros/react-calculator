@@ -27,7 +27,7 @@ export default class Calcuator extends Component{
 
     addDigit(digit){
        
-        if(digit==="0" && !this.state.value.includes('.')){
+        if(digit==="0" && this.state.value==="0" && !this.state.value.includes('.')){
             return;
         }
         if(this.state.value==="0" && digit!=='.'){
