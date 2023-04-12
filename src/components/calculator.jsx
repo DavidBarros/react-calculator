@@ -7,7 +7,7 @@ export default class Calcuator extends Component{
     constructor(props){
         super(props);
         this.state = {
-            value:"",
+            value:"0",
             operator:null,
             previousValue:null
         }
@@ -19,25 +19,55 @@ export default class Calcuator extends Component{
     
      clearMem(){
         this.setState({
-            value: "",
+            value: "0",
             operator: null,
             previousValue: null
           });
     }
 
     addDigit(digit){
-        this.setState(prevState => ({
-            value: prevState.value + digit
-          }));
+       
+        if(digit==="0" && !this.state.value.includes('.')){
+            return;
+        }
+        if(this.state.value==="0" && digit!=='.'){
+            this.setState((state = "") => ({
+            
+                value: ''
+              }))  
+        }
+        if (digit==='.' && this.state.value.includes('.')){
+            return;
+        }
+        
+        try {
+            this.setState(prevState => ({
+            
+                value: prevState.value + digit
+              }))  
+        } catch (error) {
+            console.log(error);
+        }
+        
     }
 
     setOperation(operator){
-        this.setState(prevState => ({
-            operator,
-            previousValue: prevState.value,
-            value: ""
-          }));
+        
+        if(this.state.operator!=null){
+            return;
+        }
+        
+        try {
+                this.setState(prevState => ({
+                    operator,
+                    previousValue: prevState.value,
+                    value: ""
+                    }));
         }      
+        catch (error) {
+            console.log(error);    
+        }
+    }    
 
     calcResult(){
         
