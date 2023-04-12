@@ -5,54 +5,95 @@ import Display from './diplsay'
 export default class Calcuator extends Component{
 
     constructor(props){
-        super();
+        super(props);
+        this.state = {
+            value:"",
+            operator:null,
+            previousValue:null
+        }
         this.clearMem = this.clearMem.bind(this);
-        this.setDigit = this.setDigit.bind(this);
+        this.addDigit = this.addDigit.bind(this);
         this.setOperation = this.setOperation.bind(this);
+        this.calcResult = this.calcResult.bind(this);
     }
     
      clearMem(){
-    
-        console.log("Limpo!");
+        this.setState({
+            value: "",
+            operator: null,
+            previousValue: null
+          });
     }
 
-    setDigit(digit){
-        console.log(digit);
+    addDigit(digit){
+        this.setState(prevState => ({
+            value: prevState.value + digit
+          }));
     }
 
     setOperation(operator){
-        console.log(operator);
-    }
+        this.setState(prevState => ({
+            operator,
+            previousValue: prevState.value,
+            value: ""
+          }));
+        }      
+
+    calcResult(){
+        
+        const { value, operator, previousValue } = this.state;
+        if (operator === "+") {
+            this.setState({
+            value: (Number(previousValue) + Number(value)).toString(),
+            operator: null,
+            previousValue: null
+            });
+        } else if (operator === "-") {
+            this.setState({
+            value: (Number(previousValue) - Number(value)).toString(),
+            operator: null,
+            previousValue: null
+            });
+        } else if (operator === "*") {
+            this.setState({
+            value: (Number(previousValue) * Number(value)).toString(),
+            operator: null,
+            previousValue: null
+            });
+        } else if (operator === "/") {
+            this.setState({
+            value: (Number(previousValue) / Number(value)).toString(),
+            operator: null,
+            previousValue: null
+            });
+        }
+    }    
 
 
     render(){
        return( 
         <div className = "calculator">
-            <Display value={"1000"}/>
-            <Button label="0" click={this.setDigit}/>    
-            <Button label="1"/>    
-            <Button label="2"/>    
-            <Button label="3"/>    
-            <Button label="4"/>    
-            <Button label="5"/>    
-            <Button label="6"/>    
-            <Button label="7"/>    
-            <Button label="8"/>    
-            <Button label="9"/>    
-            <Button label="+" isOperation={true}/>    
-            <Button label="-" isOperation={true}/>    
-            <Button label="/" isOperation={true}/>    
-            <Button label="*" isOperation={true}/>    
-            <Button label="AC" click={this.clearMem}/>    
-            <Button label="."/>    
-            <Button label="=" isOperation={true}/>    
+            <Display value={this.state.value}/>
+            <Button label="0" click={this.addDigit}/>    
+            <Button label="1" click={this.addDigit}/>    
+            <Button label="2" click={this.addDigit}/>    
+            <Button label="3" click={this.addDigit}/>    
+            <Button label="4" click={this.addDigit}/>    
+            <Button label="5" click={this.addDigit}/>    
+            <Button label="6" click={this.addDigit}/>    
+            <Button label="7" click={this.addDigit}/>    
+            <Button label="8" click={this.addDigit}/>    
+            <Button label="9" click={this.addDigit}/>    
+            <Button label="+" isOperation={true} click={this.setOperation}/>    
+            <Button label="-" isOperation={true} click={this.setOperation}/>    
+            <Button label="/" isOperation={true} click={this.setOperation}/>    
+            <Button label="*" isOperation={true} click={this.setOperation}/>    
+            <Button label="AC" click={this.clearMem} />    
+            <Button label="." click={this.addDigit}/>    
+            <Button label="=" isOperation={true} click={this.calcResult}/>    
                 
         </div>
        )
     }
-
-
-
-
 
 }
