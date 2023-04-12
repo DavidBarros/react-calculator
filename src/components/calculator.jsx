@@ -31,10 +31,8 @@ export default class Calcuator extends Component{
             return;
         }
         if(this.state.value==="0" && digit!=='.'){
-            this.setState((state = "") => ({
-            
-                value: ''
-              }))  
+            this.setState( {value: ''});
+             
         }
         if (digit==='.' && this.state.value.includes('.')){
             return;
